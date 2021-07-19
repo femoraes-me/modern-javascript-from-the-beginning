@@ -1,0 +1,13 @@
+header {
+    display: flex;
+    height: 200px;
+}
+
+header img {
+    height: 180px;
+}
+
+h2 {
+    line-height: 200px;
+    padding-right: 15px;
+}
