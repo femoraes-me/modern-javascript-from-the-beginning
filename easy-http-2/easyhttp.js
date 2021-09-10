@@ -1,66 +1,34 @@
-function easyHTTP() {
-    this.http = new XMLHttpRequest();
-}
+/**
+* @version 2.0.0
+* @author Felipe Moraes
+* @license MIT
+*
+**/
 
-// HTTP GET REQUEST
-easyHTTP.prototype.get = function(url, callback) {
-    this.http.open('GET', url, true);
-
-    let self = this; // variavel para usar objeto THIS em outro escopo
-
-    this.http.onload = function() {
-        if(self.http.status === 200) {
-            callback(null, self.http.responseText);
-        } else {
-            callback('Error: ' + self.http.status);
-        }
-    }
-    
-    this.http.send();
-}
-
-// HTTP POST REQUEST
-easyHTTP.prototype.post = function(url, data, callback) {
-    this.http.open('POST', url, true);
-    this.http.setRequestHeader('Content-type', 'application/json');
-
-    let self = this;
-
-    this.http.onload = function() {
-        callback(null, self.http.responseText);
+class EasyHTTP {
+    // HTTP Get Request
+    get(url) {
+        return new Promise((resolve, reject) => {
+            fetch(url)
+                .then(res => res.json())
+                .then(data => resolve(data))
+                .catch(err => reject(err));
+        })
     }
 
-    this.http.send(JSON.stringify(data));
-
-}
-
-// HTTP PUT REQUEST
-easyHTTP.prototype.put = function(url, data, callback) {
-    
-    this.http.open('PUT', url, true);
-    this.http.setRequestHeader('Content-type', 'application/json');
-
-    let self = this;
-    this.http.onload = function() {
-        callback(null, self.http.responseText);
+    // HTTP Post Request
+    post(url, data) {
+        return new Promise((resolve, reject) => {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(data => resolve(data))
+                .then(err => reject(err))
+        });
     }
-
-    this.http.send(JSON.stringify(data));
-    
-}
-
-// HTTP DELETE REQUEST
-easyHTTP.prototype.delete = function(url, callback) {
-    this.http.open('DELETE', url, true);
-
-    let self = this;
-    this.http.onload = function() {
-        if(self.http.status === 200) {
-            callback(null, 'Post Deletedo!');
-        } else {
-            callback('Error: ' + self.http.status);
-        }
-    }
-
-    this.http.send();
 }
