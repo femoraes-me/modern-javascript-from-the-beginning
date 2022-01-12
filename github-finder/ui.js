@@ -30,4 +30,36 @@ class UI {
             <div id="repos"></div>
         `;
     }
+
+    // EXIBIR MENSAGEM DE ALERTA
+    showAlert(message, className) {
+
+        this.clearAlert();
+
+        const div = document.createElement('div');
+        div.className = className;
+        div.appendChild(document.createTextNode(message));
+        const container = document.querySelector('.searchContainer');
+        const search = document.querySelector('.search');
+        container.insertBefore(div, search);
+
+        // apagar após 3 segundos
+        setTimeout(() => {
+            this.clearAlert();
+        }, 3000);
+    }
+
+    // REMOVER MENSAGEM DE ALERTA
+    clearAlert() {
+        const currentAlert = document.querySelector('.alert');
+
+        if (currentAlert) {
+            currentAlert.remove()
+        }
+    }
+
+    // limpar perfil
+    clearProfile() {
+        this.profile.innerHTML = '';
+    }
 }
