@@ -1,1 +1,0 @@
-# wheater-js-api
